@@ -60,3 +60,60 @@ select * from sh_audit;
 UPDATE SUPERHEROES SET SH_NAME = 'Ironman' WHERE SH_NAME='Superman';
 
 DELETE FROM superheroes WHERE SH_NAME = 'Ironman';
+
+
+
+create table superheroes_bk as select * from superheroes where 1 =2;
+select * from superheroes_bk
+--no data present in the superheroes_bk
+
+create or replace trigger sh_bk
+before insert or delete or update on superheroes
+for each row
+enable
+begin
+if inserting then
+insert into superheroes_bk (sh_name) values (:NEW.sh_name);
+elsif deleting then
+delete from superheroes_bk where sh_name = :old.sh_name;
+elsif updating then
+update  superheroes_bk set sh_name = :NEW.sh_name where sh_name = :old.sh_name;
+end if;
+end;
+/
+ 
+ insert into superheroes values ('blackpanther');
+ 
+ --I am getting numneric and variable error
+ 
+ CREATE TABLE schema_audit
+  (
+    ddl_date       DATE,
+    ddl_user       VARCHAR2(15),
+    object_created VARCHAR2(15),
+    object_name    VARCHAR2(15),
+    ddl_operation  VARCHAR2(15)
+  );
+
+  create or replace trigger hr_audit_tr
+  after ddl on schema
+  begin
+  insert into schema_audit values (
+sysdate, 
+sys_context('USERENV','CURRENT_USER'), 
+ora_dict_obj_type, 
+ora_dict_obj_name, 
+ora_sysevent);
+end;
+/
+
+select * from schema_audit;
+create table himava(r_num number);
+insert into bhubeshkiller values(5);
+select * from bhubeshkiller;
+
+  
+
+
+
+
