@@ -1,3 +1,5 @@
+--Instead of update 
+
 CREATE TABLE startup_audit 
 (
   Event_type  VARCHAR2(15),
@@ -47,3 +49,20 @@ begin
 
  select * from student;
  select * from subject;
+
+create or replace trigger io_update
+instead of update on vw_names
+for each row
+begin
+--updating the student name
+update student set name = :new.name
+where name = :old.name;
+--updating the subject name
+update subject set subname = :new.subname
+where subname = :old.subname;
+end;
+/
+
+update vw_names set name = ' bhubesh' where subname = 'java';
+
+select * from student ;
