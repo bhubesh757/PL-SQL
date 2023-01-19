@@ -13,3 +13,10 @@ end;
 --calling the function
 set serveroutput on;
 -- assign this to variable
+declare
+vr_area number(7,3);
+begin 
+vr_area := area_circle(25);
+dbms_output.put_line(vr_area);
+end;
+/
