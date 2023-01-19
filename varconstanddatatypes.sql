@@ -50,7 +50,23 @@ begin
 end;
 
 /* constanst in pl/sql 8/
-default keyword is used
+
+
+declare 
+v_pi constant number(7,6) := 3.14;
+begin
+dbms_output.put_line(v_pi);
+end;
+/
+
+--using default 
+declare 
+v_pi constant number(7,6) default 3.14;
+begin
+dbms_output.put_line(v_pi);
+end;
+/
+
 bind variables // or host variables*/
 
 
